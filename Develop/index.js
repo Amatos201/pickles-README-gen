@@ -1,5 +1,7 @@
 // TODO: Include packages needed for this application
-
+const inquirer = require("inquirer")
+const fs = require("fs")
+const generateMarkdown = require('./utils/generateMarkdown');
 // TODO: Create an array of questions for user input
 const questions = [
 {
@@ -21,15 +23,22 @@ const questions = [
 },{
     type: 'input',
     message: "Provide information about running tests",
-    name: 'test',
+    name: 'tests',
 },{
     type: 'input',
     message: "Provide information about contributing",
     name: 'contributing',
 },{
     type: 'list',
-    message: "'apache 2.0',bsd 3-clause', 'GNU GPL v2',tion",
+    message: "'What kind of license should your project have?",
     name: 'license',
+    choices: [
+        "MIT",
+        "APACHE",
+        "GPL",
+        "BSD",
+        "NONE"
+    ]
 },
 {
     type: 'input',
