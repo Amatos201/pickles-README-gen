@@ -1,21 +1,17 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
+const fs =require('fs');
 
-function generateMarkdown(data) {
-return 
+
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
   
-  if(licenseType === 'MIT') {
-    yourLicense = `![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)`
-  } else if (licenseType === 'GPLv3') {
-    yourLicense = `![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)`
-  } else if (licenseType === 'GPL') {
-    yourLicense = `![GPL license](https://img.shields.io/badge/License-GPL-blue.svg)`
+  if(!license) {
+    return '';
   } else {
-    license.license = "N/A"
-  }
-  return yourLicense;
-};
+    return '[![${license} license](https://img.shields.io/badge/License-${license}-blue.svg)](${renderLicenseLink(license)})'
+
+}
+}
 
 
 // TODO: Create a function that returns the license link
@@ -25,18 +21,38 @@ function renderLicenseBadge(license) {
 //}
 
 // TODO: Create a function that returns the license section of README
+function renderLicenseLink(license) {
+  if (license === 'MIT') {
+    return `https://lbesson.mit-license.org/`
+  }
+  if (license === 'GPL') {
+    return `http://perso.crans.org/besson/LICENSE.html`
+  }
+  if (license === 'CC--0') {
+    return `https://creativecommons.org/licenses/by-nd/4.0` 
+  }
+}
+
 // If there is no license, return an empty string
 //function renderLicenseSection(license) {}
-
+function renderLicenseSection(license) {
+  if (!license) {
+    return ``;
+  } else {
+    return `## Licenses
+    This project is covered under the ${license} license. To learn more about what this means, click the license button at the top.`
+  }
+}
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   return `# ${data.title}
-${data.description}
 
 
 
+  ${renderLicenseBadge(data.licenses)}
 
 
+ 
 
 # Tables of Contents
 
@@ -48,6 +64,9 @@ ${data.description}
 * [Questions](#questions)
 * [Credits](#credits)
 
+## description
+${data.description}
+
 
 # Installation
 ${data.installation}
@@ -55,8 +74,8 @@ ${data.installation}
 # Usage
 ${data.usages}
 
-# License
-${data.licenses}
+
+${renderLicenseSection(data.licenses)}
 
 # Contributing
 ${data.contribute}
@@ -67,13 +86,15 @@ ${data.tests}
 # Questions
 ![Profile Avatar](${data.pfp})
 
-If you have any questions, please e-mail me at ${data.email}.
+If you have any questions, please e-mail me at 
+Github: https://github.com/
+${data.email}.
 
 # Credits
-Github: [${data.username}](${data.url})
+${data.name}
 
-copyright ${data.name}. All Rights Reserved.
+
 `;
 }
-}
+
 module.exports = generateMarkdown;
